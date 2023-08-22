@@ -12,6 +12,8 @@ import {
   PhotoPanel,
 } from './styles'
 
+import { useTranslation } from 'react-i18next'
+
 type Location = {
   state: {
     photo: Photo
@@ -19,6 +21,8 @@ type Location = {
 }
 
 const PhotoView = () => {
+  const { t } = useTranslation()
+
   const location: Location = useLocation()
   const { photo } = location.state
 
@@ -33,14 +37,14 @@ const PhotoView = () => {
           )}
 
           <PhotoCreationDate>
-            Data de criação: {photo.creationDate.toLocaleDateString()}
+            {t('details.createdDate', { date: photo.creationDate })}
           </PhotoCreationDate>
         </InfoPanel>
       </PhotoPanel>
 
       <BackLinkPanel>
         <BackLink to='/'>
-          <BackButton>Voltar</BackButton>
+          <BackButton>{t('details.backButton')}</BackButton>
         </BackLink>
       </BackLinkPanel>
     </Container>

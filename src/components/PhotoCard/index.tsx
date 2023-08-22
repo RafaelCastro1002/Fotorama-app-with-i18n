@@ -8,11 +8,15 @@ import {
   PhotoLink,
 } from './styles'
 
+import { useTranslation } from 'react-i18next'
+
 type Props = {
   photo: Photo
 }
 
 const PhotoCard = ({ photo }: Props) => {
+  const { t } = useTranslation()
+  
   return (
     <PhotoLink to='/view' state={{ photo }}>
       <CardContainer>
@@ -27,7 +31,7 @@ const PhotoCard = ({ photo }: Props) => {
             </PhotoDescription>
           )}
           <PhotoCreationDate>
-            Criada em {photo.creationDate.toLocaleDateString()}
+            {t('home.createdAtLabel', { date: photo.creationDate })}
           </PhotoCreationDate>
         </InfoPanel>
       </CardContainer>

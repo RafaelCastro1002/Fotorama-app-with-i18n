@@ -20,7 +20,11 @@ import loadingGif from '../../assets/img/loading.gif'
 import PhotoCard from '../../components/PhotoCard'
 import { UserContext } from '../../context/UserContext'
 
+import { useTranslation } from 'react-i18next'
+
 const Home = () => {
+  const { t } = useTranslation()
+
   const [loading, isLoading] = useState(false)
 
   const photoService = new PhotoService()
@@ -63,7 +67,7 @@ const Home = () => {
     <Container>
       <SearchArea>
         <FilterInput
-          placeholder='Digite o termo da busca'
+          placeholder={t('home.searchPlaceholder')}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -75,7 +79,7 @@ const Home = () => {
               setCriteria(e.target.checked ? 'relevant' : 'latest')
             }
           />
-          <CriteriaOptionLabel>Mais relevantes</CriteriaOptionLabel>
+          <CriteriaOptionLabel>{t('home.morePertinent')}</CriteriaOptionLabel>
 
           <CriteriaOptionButton
             checked={criteria == 'latest'}
@@ -83,14 +87,14 @@ const Home = () => {
               setCriteria(e.target.checked ? 'latest' : 'relevant')
             }
           />
-          <CriteriaOptionLabel>Mais recentes</CriteriaOptionLabel>
+          <CriteriaOptionLabel>{t('home.moreLatest')}</CriteriaOptionLabel>
         </CriteriaPanel>
 
-        <SearchButton onClick={() => searchPhotos()}>Buscar</SearchButton>
+        <SearchButton onClick={() => searchPhotos()}>{t('home.search')}</SearchButton>
       </SearchArea>
 
       <ResultsArea>
-        {loading && <Loading src={loadingGif} alt='Carregando resultados' />}
+        {loading && <Loading src={loadingGif} alt={t('home.loadingAlt')} />}
 
         {photos.length > 0 &&
           photos.map((p) => <PhotoCard key={p.id} photo={p} />)}
@@ -105,7 +109,9 @@ const Home = () => {
           )}
 
           <CurrentPage>
-            Página {page} de {totalPages}
+            {t('home.pageLabel', {
+              page, totalPages
+            })}
           </CurrentPage>
 
           {page < totalPages && (
